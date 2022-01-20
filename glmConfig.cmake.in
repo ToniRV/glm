@@ -1,0 +1,12 @@
+get_filename_component(glm_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
+include(CMakeFindDependencyMacro)
+
+# glm is hydra here
+# set(glm_INCLUDE_DIR "@CONFIG_INCLUDE_DIRS@")
+
+# Library dependencies (contains definitions for IMPORTED targets)
+if(NOT TARGET glm)
+  include("${glm_CMAKE_DIR}/glmTargets.cmake")
+endif()
+
+# set(glm_LIBRARIES "@EXPORT_TARGETS@")
