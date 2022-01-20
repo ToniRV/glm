@@ -19,6 +19,25 @@ message(STATUS "GLM: Version " ${GLM_VERSION})
 add_subdirectory(glm)
 add_library(glm::glm ALIAS glm)
 
+# Installation stuff (for Hydra)
+include(CMakePackageConfigHelpers)
+write_basic_package_version_file(
+  "${PROJECT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake"
+  VERSION ${PROJECT_VERSION}
+  COMPATIBILITY AnyNewerVersion
+)
+configure_package_config_file(
+  "${PROJECT_SOURCE_DIR}/${PROJECT_NAME}Config.cmake.in"
+  "${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
+  INSTALL_DESTINATION "${CMAKE_INSTALL_DATADIR}/cmake/${PROJECT_NAME}"
+  )
+
+if(EXPORT_hydra_engine)
+  export(TARGETS ${PROJECT_NAME} FILE ${PROJECT_NAME}Targets.cmake)
+  export(PACKAGE ${PROJECT_NAME})
+endif(EXPORT_hydra_engine)
+
+# This install was here before hydra
 if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_CURRENT_SOURCE_DIR})
 
 	include(CPack)
